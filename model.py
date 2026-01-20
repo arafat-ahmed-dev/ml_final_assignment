@@ -95,8 +95,8 @@ print("Binary columns are already encoded as 0 and 1:")
 for col in binary_cols:
     print(f"{col}: {train_data[col].unique()}")
 
-# Step 5: splitting data and scaling features
-print("\nStep 5: Splitting and scaling data")
+# Step 5: splitting data for training and validation
+print("\nStep 5: Splitting data for training and validation")
 X = train_data.drop('price_range', axis=1)
 y = train_data['price_range']
 
@@ -109,13 +109,7 @@ X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_st
 
 print("Training set:", X_train.shape)
 print("Validation set:", X_val.shape)
-
-# scaling
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_val_scaled = scaler.transform(X_val)
-
-print("Scaling done!")
+print("Data split done! (Scaling will be done in pipeline)")
 
 # ===========================================
 # 3. Pipeline Creation
@@ -124,12 +118,13 @@ print("\n" + "=" * 50)
 print("3. PIPELINE CREATION")
 print("=" * 50)
 
-# creating pipeline
+# creating pipeline that integrates preprocessing and model
 pipeline = Pipeline([
-    ('classifier', RandomForestClassifier(random_state=42, n_jobs=1))
+    ('scaler', StandardScaler()),  # Preprocessing step: feature scaling
+    ('classifier', RandomForestClassifier(random_state=42, n_jobs=1))  # Model
 ])
 
-print("Pipeline created:")
+print("Pipeline created with preprocessing and model integration:")
 print(pipeline)
 
 # ===========================================
