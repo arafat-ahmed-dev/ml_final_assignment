@@ -1,6 +1,7 @@
 # mobile price prediction app
 # i made this for my ml assignment
 
+import utils.session
 import gradio as gr
 import pickle
 import pandas as pd
